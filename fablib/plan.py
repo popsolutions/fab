@@ -421,6 +421,8 @@ class Plan:
 
             brokendeps = []
             for dep in missing:
+                if dep.name not in all_missing:
+                    continue
                 brokendeps.append(dep.name)
 
             logger.debug(
