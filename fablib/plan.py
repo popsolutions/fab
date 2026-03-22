@@ -403,6 +403,8 @@ class Plan:
                 provided |= self._get_provided(pkg_control)
 
             unresolved = new_deps - resolved
+            missing |= packages.missing
+            missing |= packages.missing
             all_missing = set(map(str, (missing | packages.missing))) - provided
 
         if all_missing:
