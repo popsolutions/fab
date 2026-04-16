@@ -16,8 +16,8 @@ ifndef RELEASE
 $(error RELEASE not defined)
 endif
 
-DISTRO ?= $(shell dirname $(RELEASE))
-CODENAME ?= $(shell basename $(RELEASE))
+DISTRO := $(shell dirname $(RELEASE))
+CODENAME := $(shell basename $(RELEASE))
 
 UBUNTU = $(shell [ "$(DISTRO)" = 'ubuntu' ] && echo 'y')
 DEBIAN = $(shell [ "$(DISTRO)" = 'debian' ] && echo 'y')
@@ -54,9 +54,15 @@ endef
 _CONF_VARS_BUILTIN = $(call filter-undefined-vars,$(CONF_VARS_BUILTIN))
 _CONF_VARS = $(_CONF_VARS_BUILTIN) $(call filter-undefined-vars,$(CONF_VARS))
 
-export $(_CONF_VARS)
-export FAB_CHROOT_ENV = $(shell echo $(_CONF_VARS) | sed 's/ \+/:/g')
-export FAB_INSTALL_ENV = $(FAB_CHROOT_ENV)
+export RELEASE
+export DISTRO
+export CODENAME
+export HOSTNAME
+export FAB_ARCH
+FAB_CHROOT_ENV := $(shell echo $(_CONF_VARS) | sed 's/ \+/:/g')
+FAB_INSTALL_ENV := $(FAB_CHROOT_ENV)
+export FAB_CHROOT_ENV
+export FAB_INSTALL_ENV
 
 # FAB_PATH dependent infrastructural components
 FAB_SHARE_PATH ?= /usr/share/fab
